@@ -4,3 +4,4 @@ pylint
 PyQt5
 python-dateutil
 requests
+setuptools
