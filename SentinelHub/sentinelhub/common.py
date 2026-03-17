@@ -29,12 +29,21 @@ class Layer:
     def load(cls, payload):
         """Creates an instance of the class from a payload"""
         defaults_payload = payload["datasourceDefaults"]
+
+        # Handle different API response formats
+        if "datasetSourceId" in payload:
+            data_source_id = payload["datasetSourceId"]
+        elif "datasetSource" in payload:
+            data_source_id = payload["datasetSource"]["@id"].rsplit("/", 1)[-1]
+        else:
+            raise ValueError("Layer payload missing both 'datasetSourceId' and 'datasetSource' fields")
+
         return cls(
             layer_id=payload["id"],
             name=payload["title"],
             data_source=DataSource(
                 data_source_type=defaults_payload["type"],
-                data_source_id=payload["datasetSource"]["@id"].rsplit("/", 1)[-1],
+                data_source_id=data_source_id,
                 collection_id=defaults_payload.get("collectionId"),
             ),
         )
