@@ -28,14 +28,21 @@ pip install -r requirements.txt -r requirements-dev.txt
 mkdir ./SentinelHub/external
 pip download -d ./SentinelHub/external --no-deps -r requirements.txt
 ```
-- Configure a path to QGIS Python environment. The path depends on your OS and QGIS installation. Here is an example for Linux:
+- Configure a path to QGIS Python environment. The path depends on your OS and QGIS installation. Examples:
 ```bash
+# Linux
 export PYTHONPATH=/usr/lib/python3/dist-packages
+
+# macOS (check your QGIS.app version)
+export PYTHONPATH=/Applications/QGIS.app/Contents/Resources/python
+
+# Windows
+set PYTHONPATH=C:\Program Files\QGIS 3.x\apps\qgis\python
 ```
 
 ### Development tips
 
-- Use `pb_tool` to package and deploy the code to your local QGIS repository
+- Use `pb_tool` to package and deploy the code to your local QGIS repository (run from the `SentinelHub` directory where `pb_tool.cfg` is located)
 ```bash
 cd ./SentinelHub
 pbt deploy -y
