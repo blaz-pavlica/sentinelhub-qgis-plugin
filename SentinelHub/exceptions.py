@@ -112,8 +112,10 @@ class DownloadError(PluginException):
 class SessionError(DownloadError):
     """An error that is raised if a session creation fails"""
 
-    def __init__(self):
-        super().__init__("Authentication failed, check your credentials")
+    def __init__(self, message=None):
+        if message is None:
+            message = "Authentication failed, check your credentials"
+        super().__init__(message)
 
 
 class BBoxTransformError(PluginException):

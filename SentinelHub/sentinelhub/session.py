@@ -3,6 +3,7 @@ Module for handling Sentinel Hub session
 """
 import time
 
+import requests
 from oauthlib.oauth2 import BackendApplicationClient
 from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from qgis.core import QgsMessageLog
@@ -77,5 +78,15 @@ class Session:
                 return oauth_session.fetch_token(
                     token_url=self.oauth_url, client_id=self.client_id, client_secret=self.client_secret
                 )
+        except requests.HTTPError as exception:
+            # HTTP error during authentication - provide specific error message
+            from ..sentinelhub.client import get_error_message
+
+            error_msg = get_error_message(exception)
+            raise SessionError(error_msg) from exception
         except OAuth2Error as exception:
-            raise SessionError from exception
+            # OAuth2 specific error
+            error_details = str(exception)
+            if error_details:
+                raise SessionError(f"Authentication failed: {error_details}") from exception
+            raise SessionError() from exception
