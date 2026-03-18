@@ -1,6 +1,7 @@
 """
 Download client for Sentinel Hub service
 """
+
 from xml.etree import ElementTree
 
 import requests
@@ -103,7 +104,16 @@ def get_error_message(exception):
             server_message = exception.response.text.strip("\n\t ")
 
         server_message = server_message.encode("ascii", errors="ignore").decode("utf-8")
-        return message + f'server response: "{server_message}"'
+
+        # Include HTTP status code
+        status_code = exception.response.status_code
+        message += f"HTTP {status_code} - "
+
+        # Provide meaningful message when server response is empty
+        if not server_message:
+            server_message = "No additional details provided by server"
+
+        return message + f"{server_message}"
 
     return message + str(exception)
 
