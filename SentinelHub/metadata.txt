@@ -6,7 +6,7 @@ name=SentinelHub
 qgisMinimumVersion=3.22
 qgisMaximumVersion=3.99
 description=SentinelHub plugin enables users to harness the power of Sentinel Hub services directly from QGIS.
-version=2.0.2
+version=2.0.3
 author=Sinergise
 email=info@sentinel-hub.com
 
@@ -26,7 +26,7 @@ repository=https://github.com/sentinel-hub/sentinelhub-qgis-plugin
 
 # Recommended items:
 changelog=
-    2.0.2
+    2.0.3
         - use new endpoints for sh.dataspace.copernicus.eu
     2.0.1
         - change main `base_url` to CDSE endpoint
